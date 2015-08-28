@@ -23,19 +23,23 @@ class Game
   end
 
 
+
   def tile_check(action, position)
     if action == "r"
-      if @game_board[position].bombed
+      if @game_board[position[0].to_i, position[1].to_i].bombed
         @game_over = true
       else
-        tile = @game_board[position]
+        tile = @game_board[position[0].to_i, position[1].to_i]
         tile.revealed = true
-        tile.fringe_finder
+        # tile.fringe_finder
       end
     else
-      @game_board[position].flagged = true
+      @game_board[position[0].to_i, position[1].to_i].flagged = true
     end
   end
+
+  g = Game.new
+  g.play
 
 
 

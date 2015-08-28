@@ -33,22 +33,50 @@ class Tile
     end
   end
 
-  def fringe_finder
-    fringe = []
-    if self.neighbors_bomb_count(self.neighbors) > 0
-      fringe << self unless self.revealed
-      self.revealed = true
-    else
-      self.neighbors.each do |el|
-        el.fringe_finder
-      end
+  def revealed=(val)
+    return if revealed
+    @revealed = val
+    if neighbors_bomb_count.zero?
+      neighbors.each { |tile| tile.revealed = true }
     end
+    # IF no neighbors are bombed,
+    # reveal all neighbors
   end
 
+  def to_s
+    if (self.revealed) && (self.neighbors_bomb_count > 0)
+      "| #{neighbors_bomb_count} |"
+    elsif self.revealed
+      "| r |"
+    elsif self.flagged
+      "| f |"
+    else
+      "| * |"
+    end
+  end
+  #
+  # def fringe_finder
+  #   fringe = [self]
+  #
+  #     until fringe.empty?
+  #       if self.neighbors_bomb_count(self.neighbors) > 0
+  #         # fringe << self unless self.revealed
+  #         self.revealed = true
+  #         break
+  #
+  #       else
+  #         fringe << self.neighbors
+  #         tile = fringe.shift
+  #         #debugger
+  #         tile.fringe_finder unless tile.revealed
+  #       end
+  #     end
+  # end
 
-  def neighbors_bomb_count(array)
+
+  def neighbors_bomb_count
     counter = 0
-    array.each do |el|
+    neighbors.each do |el|
         counter += 1 if el.bombed
     end
     counter

@@ -2,11 +2,12 @@ require_relative './tile.rb'
 require 'byebug'
 
 class Board
-BOMB_NUM = 10
+BOMB_NUM = 1
   def initialize
     @board = Array.new(9) {Array.new(9)}
     populate
     insert_bombs
+    render
   end
 
   attr_reader :board
@@ -37,10 +38,21 @@ BOMB_NUM = 10
     end
   end
 
-  # def render
-  #   header = (0..8).to_a.each { |el| print "| #{el} |" }
-  #   self.board.each_with_index do |row, row_idx| 
+  def won?
+  end
 
+  def render
+    print "   "
+    (0..8).to_a.each { |el| print "| #{el} |" }
+    print "\n"
+    self.board.each_with_index do |row, row_idx|
+      print "#{row_idx}  " # 2 spaces
+      row.each_with_index do |el, col_idx|
+        print el.to_s
+      end
+      print "\n"
+    end
+  end
 
   def [](row, col)
     @board[row][col]
