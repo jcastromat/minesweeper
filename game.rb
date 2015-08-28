@@ -16,7 +16,7 @@ class Game
       action = guess[0]
       position = guess[1..2]
       tile_check(action, position)
-      render
+      @game_board.render
       # recieve game over from tile check, or renders board
       # not done yet
     end
@@ -28,12 +28,18 @@ class Game
       if @game_board[position].bombed
         @game_over = true
       else
-        @game_board[position].reavealed = true
+        tile = @game_board[position]
+        tile.revealed = true
+        tile.fringe_finder
       end
     else
       @game_board[position].flagged = true
     end
   end
+
+
+
+
 
 
   #tile methods:

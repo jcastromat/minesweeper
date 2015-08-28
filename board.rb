@@ -37,6 +37,11 @@ BOMB_NUM = 10
     end
   end
 
+  # def render
+  #   header = (0..8).to_a.each { |el| print "| #{el} |" }
+  #   self.board.each_with_index do |row, row_idx| 
+
+
   def [](row, col)
     @board[row][col]
   end
