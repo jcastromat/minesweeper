@@ -39,6 +39,13 @@ BOMB_NUM = 1
   end
 
   def won?
+    counter = 0
+    @board.each do |row|
+      row.each do |el|
+        counter += 1 if el.bombed && el.flagged
+      end
+    end
+    counter == BOMB_NUM ? true : false
   end
 
   def render
